@@ -23,12 +23,32 @@ public class User {
     private String password;
     private String salt;
 
-    public User(String firstName, String lastName, String emailAddress, String login, String password) {
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+
+    public void setLogin(String login) {
         this.login = login;
+    }
+
+    public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public Long getUserId() {

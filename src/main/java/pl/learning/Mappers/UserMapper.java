@@ -6,13 +6,12 @@ import pl.learning.Requests.UserRegistrationRequest;
 
 @Component
 public class UserMapper {
-public User toEntity(UserRegistrationRequest request){
-    return new User(
-            request.getFirstName(),
-            request.getLastName(),
-            request.getEmail(),
-            request.getLogin(),
-            request.getPassword()
-            );
-}
+    public User toEntity(UserRegistrationRequest request) {
+        User user = new User();
+        user.setEmailAddress(request.getEmail());
+        user.setLogin(request.getLogin());
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        return user;
+    }
 }

@@ -9,5 +9,10 @@ public class ValidationUtils {
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
+    public static boolean validatePassword (String password){
+        Pattern pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=*])(?=\\S+$).{6,}$");
+        Matcher matcher = pattern.matcher(password);
+        return matcher.matches();
+    }
 
 }
