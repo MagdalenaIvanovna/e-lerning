@@ -11,35 +11,35 @@ import java.util.Map;
 import java.util.function.Function;
 
 public class JWTUtils {
-    private String SECRET_KEY = "lkady7shs0d9g7h";
+    private static String SECRET_KEY = "lkady7shs0d9g7h";
 
-    public String extractUsername(String token) {
+    public static String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
-    public Date extractExpiration(String token) {
+    public static Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+    public static <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
-    private Claims extractAllClaims(String token) {
+    private static Claims extractAllClaims(String token) {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
     }
 
-    private Boolean isTokenExpired(String token) {
+    private static Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
-    public String generateToken(String login) {
+    public static String generateToken(String login) {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, login);
     }
 
-    private String createToken(Map<String, Object> claims, String subject) {
+    private static String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
@@ -48,7 +48,7 @@ public class JWTUtils {
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
     }
 
-    public Boolean validateToken(String token, String login) {
+    public static Boolean validateToken(String token, String login) {
         final String username = extractUsername(token);
         return (username.equals(login) && !isTokenExpired(token));
     }

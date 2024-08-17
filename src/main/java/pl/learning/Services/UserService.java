@@ -11,6 +11,7 @@ import pl.learning.Requests.UserLoginRequest;
 import pl.learning.Requests.UserRegistrationRequest;
 import pl.learning.Responses.UserLoginResponse;
 import pl.learning.Responses.UserRegistrationResponse;
+import pl.learning.Utils.JWTUtils;
 import pl.learning.Utils.PasswordUtils;
 import pl.learning.Utils.ValidationUtils;
 
@@ -22,8 +23,6 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private UserMapper userMapper;
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
 
     public UserRegistrationResponse register(UserRegistrationRequest request) {
@@ -53,9 +52,18 @@ public class UserService {
     }
 
     public UserLoginResponse login(UserLoginRequest request) {
-        //TODO: hash password
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getLogin(), request.getPassword()));
-        //TODO: jeżeli sukces to wygenerować token i wysłać do użytkownika
-        return null;
+        User user = userRepository.findByLogin(request.getLogin());
+        if (user == null){
+            return new UserLoginResponse(false,"");
+        }
+        String salt = user.getSalt();
+        String password = request.getPassword();
+        String hashPassword = PasswordUtils.hashPassword(password,salt);
+        if (!user.getPassword().equals(hashPassword)){
+            return new UserLoginResponse(false, "");
+        }
+        String jwt = JWTUtils.generateToken(request.getLogin());
+        return new UserLoginResponse(true,jwt);
     }
+
 }
