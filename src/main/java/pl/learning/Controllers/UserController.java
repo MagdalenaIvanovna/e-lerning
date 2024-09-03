@@ -33,5 +33,12 @@ public class UserController {
     public ResponseEntity<UserUpdateResponse> updateLastName(@RequestBody UserUpdateRequest request){
         return ResponseEntity.ok(userService.updateLastName(request));
     }
-
+    @PutMapping(value = "/updateEmail")
+    public ResponseEntity<UserUpdateResponse> updateEmail(@RequestBody UserUpdateRequest request){
+        return ResponseEntity.ok(userService.updateEmail(request));
+    }
+    @PutMapping(value = "/updatePassword")
+    public ResponseEntity<UserUpdateResponse> updatePassword(@RequestBody UserUpdateRequest request) {
+        return ResponseEntity.ok(userService.updatePassword(request));
+    }
 }
