@@ -12,6 +12,7 @@ public class UserMapper {
         user.setLogin(request.getLogin());
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
+        user.setRole(request.getRole().toUpperCase());
         return user;
     }
 }

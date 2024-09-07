@@ -14,6 +14,6 @@ public class UserDetailsService {
 
     public UserDetails getByUserName(String userName){
         User user = userRepository.findByLogin(userName);
-        return new UserDetailsImpl(user.getLogin(),user.getPassword());
+        return new UserDetailsImpl(user.getLogin(),user.getPassword(), user.getRole());
     }
 }

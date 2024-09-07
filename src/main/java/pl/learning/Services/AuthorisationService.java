@@ -2,6 +2,7 @@ package pl.learning.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.learning.Data.UserRole;
 import pl.learning.Entities.User;
 import pl.learning.Mappers.UserMapper;
 import pl.learning.Repositories.UserRepository;
@@ -12,6 +13,8 @@ import pl.learning.Responses.UserRegistrationResponse;
 import pl.learning.Utils.JWTUtils;
 import pl.learning.Utils.PasswordUtils;
 import pl.learning.Utils.ValidationUtils;
+
+import java.util.Arrays;
 
 @Service
 public class AuthorisationService {
@@ -36,6 +39,18 @@ public class AuthorisationService {
         if (user != null) {
             return new UserRegistrationResponse(false, "login already exist");
         }
+        UserRole[] roles = UserRole.values();
+        boolean isSuccess = false;
+        for (UserRole role : roles){
+            if (role.toString().equals(request.getRole().toUpperCase())){
+                isSuccess = true;
+                break;
+            }
+        }
+        if (!isSuccess) {
+            return new UserRegistrationResponse(false, "Invalid user role");
+        }
+
 
         String salt = PasswordUtils.generateSalt();
         String hashPassword = PasswordUtils.hashPassword(request.getPassword(), salt);

@@ -3,20 +3,27 @@ package pl.learning.Configs;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 public class UserDetailsImpl implements UserDetails {
     private String userName;
     private String password;
 
-    public UserDetailsImpl(String userName, String password) {
+    private String role;
+
+    public UserDetailsImpl(String userName, String password, String role) {
         this.userName = userName;
         this.password = password;
+        this.role = role;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        ArrayList<GrantedAuthorityImpl> list = new ArrayList<>();
+        list.add(new GrantedAuthorityImpl(role));
+        return list;
     }
 
     @Override

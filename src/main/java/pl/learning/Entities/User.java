@@ -23,6 +23,8 @@ public class User {
     private String password;
     private String salt;
 
+    private String role;
+
     public void setUserId(Long userId) {
         this.userId = userId;
     }
@@ -51,6 +53,10 @@ public class User {
         this.salt = salt;
     }
 
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public Long getUserId() {
         return userId;
     }
@@ -77,5 +83,9 @@ public class User {
 
     public String getSalt() {
         return salt;
+    }
+
+    public String getRole() {
+        return role;
     }
 }
